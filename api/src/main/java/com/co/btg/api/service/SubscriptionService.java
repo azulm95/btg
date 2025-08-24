@@ -36,9 +36,14 @@ public class SubscriptionService {
         Fund fund = fundRepository.findById(fundId)
                 .orElseThrow(() -> new FundNotFoundException("Fondo no encontrado: " + fundId));
 
-        if (user.getBalance() < fund.getMinAmount()) {
+        if (amount < fund.getMinAmount()) {
             throw new InsufficientBalanceException(
-                    "No tiene saldo disponible para vincularse al fondo " + fund.getName()
+                "El monto mínimo para vincularse al fondo " + fund.getName() + " es " + fund.getMinAmount()
+            );
+        }
+        if (user.getBalance() < amount) {
+            throw new InsufficientBalanceException(
+                "No tiene saldo disponible para vincularse al fondo " + fund.getName()
             );
         }
         // Crear suscripción
@@ -115,7 +120,7 @@ public class SubscriptionService {
 
     // Ver historial
     public List<Transaction> getHistoryByUser(String userId) {
-        return transactionRepository.findByField(userId, userId);
+    	return transactionRepository.findByField("userId", userId);
     }
 }
 

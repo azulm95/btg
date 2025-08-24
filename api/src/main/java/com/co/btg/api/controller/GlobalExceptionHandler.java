@@ -13,8 +13,10 @@ import com.co.btg.api.exceptions.SubscriptionNotFoundException;
 import com.co.btg.api.exceptions.UserNotFoundException;
 
 import java.time.LocalDateTime;
+import lombok.extern.slf4j.Slf4j;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(InsufficientBalanceException.class)
@@ -35,19 +37,26 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(ex, HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFound(
+            UserNotFoundException ex, WebRequest request) {
+        return buildErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(
             Exception ex, WebRequest request) {
         return buildErrorResponse(ex, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
-    
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserNotFound(
-            Exception ex, WebRequest request) {
-        return buildErrorResponse(ex, HttpStatus.INTERNAL_SERVER_ERROR, request);
-    }
 
     private ResponseEntity<ErrorResponse> buildErrorResponse(Exception ex, HttpStatus status, WebRequest request) {
+        // Log con nivel según severidad
+        if (status.is5xxServerError()) {
+            log.error("Error interno: {}", ex.getMessage(), ex);
+        } else {
+            log.warn("Error controlado: {}", ex.getMessage());
+        }
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 status.value(),
@@ -58,4 +67,3 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, status);
     }
 }
-
