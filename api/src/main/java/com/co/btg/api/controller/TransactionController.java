@@ -19,7 +19,7 @@ public class TransactionController {
     // 3. Historial de transacciones por usuario
     @GetMapping("/{userId}")
     public ResponseEntity<?> getHistory(@PathVariable String userId) {
-        return ResponseEntity.ok(subscriptionService.getHistory(userId));
+        return ResponseEntity.ok(subscriptionService.getHistoryByUser(userId));
     }
 }
 

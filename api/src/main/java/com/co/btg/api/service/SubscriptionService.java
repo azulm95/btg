@@ -14,11 +14,7 @@ import com.co.btg.api.models.Fund;
 import com.co.btg.api.models.Subscription;
 import com.co.btg.api.models.Transaction;
 import com.co.btg.api.models.User;
-import com.co.btg.api.repositories.FundRepository;
-import com.co.btg.api.repositories.SubscriptionRepository;
-import com.co.btg.api.repositories.TransactionRepository;
-import com.co.btg.api.repositories.UserRepository;
-
+import com.co.btg.api.repositories.GenericRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,10 +22,10 @@ import lombok.RequiredArgsConstructor;
 public class SubscriptionService {
 
 
-    private final UserRepository userRepository;
-    private final FundRepository fundRepository;
-    private final SubscriptionRepository subscriptionRepository;
-    private final TransactionRepository transactionRepository;
+    private final GenericRepository<User> userRepository;
+    private final GenericRepository<Fund> fundRepository;
+    private final GenericRepository<Subscription> subscriptionRepository;
+    private final GenericRepository<Transaction> transactionRepository;
     private final NotificationService notificationService;
 
     // Suscribirse a un fondo
@@ -118,8 +114,8 @@ public class SubscriptionService {
     }
 
     // Ver historial
-    public List<Transaction> getHistory(String userId) {
-        return transactionRepository.findByUserId(userId);
+    public List<Transaction> getHistoryByUser(String userId) {
+        return transactionRepository.findByField(userId, userId);
     }
 }
 

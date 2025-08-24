@@ -1,27 +1,29 @@
 package com.co.btg.api.models;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 
-@DynamoDBTable(tableName = "Funds")
+@DynamoDbBean
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Fund {
 
-    @DynamoDBHashKey(attributeName = "fundId")
     private String fundId; // PK
 
-    @DynamoDBAttribute(attributeName = "name")
     private String name;
 
-    @DynamoDBAttribute(attributeName = "minAmount")
     private Double minAmount; // monto mínimo de vinculación
+    
+    @DynamoDbPartitionKey
+    public String getFundId() {   // <- Aquí debes marcar el getter, no el campo
+        return fundId;
+    }
 }

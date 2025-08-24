@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.co.btg.api.models.Fund;
-import com.co.btg.api.repositories.FundRepository;
+import com.co.btg.api.repositories.GenericRepository;
 
 
 @RestController
@@ -13,7 +13,7 @@ import com.co.btg.api.repositories.FundRepository;
 @RequiredArgsConstructor
 public class FundController {
 
-    private final FundRepository fundRepository;
+    private final GenericRepository<Fund> fundRepository;
 
     @GetMapping
     public ResponseEntity<?> getAllFunds() {

@@ -60,17 +60,16 @@
         <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
-    <!-- AWS SDK para DynamoDB -->
+    <!-- AWS SDK v2 para DynamoDB -->
     <dependency>
         <groupId>software.amazon.awssdk</groupId>
         <artifactId>dynamodb</artifactId>
     </dependency>
 
-    <!-- Spring Data DynamoDB -->
+    <!-- Mapper de objetos a DynamoDB (SDK v2 enhanced client) -->
     <dependency>
-        <groupId>com.github.derjust</groupId>
-        <artifactId>spring-data-dynamodb</artifactId>
-        <version>5.1.0</version>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>dynamodb-enhanced</artifactId>
     </dependency>
 
     <!-- Lombok -->
