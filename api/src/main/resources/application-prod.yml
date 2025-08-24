@@ -1,0 +1,10 @@
+aws:
+  dynamodb:
+    endpoint: https://dynamodb.<region>.amazonaws.com  # endpoint real de AWS
+    region: <tu-region>
+    # accessKey y secretKey en AWS normalmente se toman de IAM roles, no se ponen aquí
+
+cognito:
+  userPoolId: <tu-user-pool-id>
+  clientId: <tu-client-id>
+  region: <tu-region>

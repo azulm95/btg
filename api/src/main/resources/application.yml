@@ -1,17 +1,6 @@
 spring:
   application:
     name: api
-  security:
-    user:
-      name: admin
-      password: admin123
 
 server:
   port: 8080
-
-aws:
-  dynamodb:
-    accessKey: test
-    secretKey: test
-    endpoint: http://localhost:8000
-    region: localhost
