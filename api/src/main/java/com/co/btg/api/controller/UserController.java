@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.co.btg.api.dto.UserRequest;
 import com.co.btg.api.models.User;
 import com.co.btg.api.repositories.GenericRepository;
-import com.co.btg.api.service.UserService;
+import com.co.btg.api.service.imp.UserService;
 
 @RestController
 @RequestMapping("/api/users")
@@ -26,5 +26,16 @@ public class UserController {
         user.setBalance(500000.0); // monto inicial
         User saved = userService.saveUser(user);
         return ResponseEntity.status(201).body(saved);
+    }
+    
+    @PutMapping
+    public ResponseEntity<?> updateUser(@RequestBody UserRequest user) {
+        User saved = userService.saveUser(user);
+        return ResponseEntity.status(201).body(saved);
+    }
+    
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllUser() {
+    	return ResponseEntity.ok(userService.findAll());
     }
 }

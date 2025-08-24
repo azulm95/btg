@@ -1,6 +1,5 @@
 package com.co.btg.api.controller;
 
-import com.co.btg.api.service.JwtService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +10,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import com.co.btg.api.service.imp.JwtService;
 
 import java.util.Map;
 

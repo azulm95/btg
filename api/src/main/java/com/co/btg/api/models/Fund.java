@@ -22,6 +22,8 @@ public class Fund {
 
     private Double minAmount; // monto mínimo de vinculación
     
+    private String category;
+    
     @DynamoDbPartitionKey
     public String getFundId() {   // <- Aquí debes marcar el getter, no el campo
         return fundId;

@@ -3,6 +3,7 @@ package com.co.btg.api.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.co.btg.api.dto.ApiResponse;
 import com.co.btg.api.dto.SubscribeRequest;
-import com.co.btg.api.service.SubscriptionService;
+import com.co.btg.api.service.imp.SubscriptionService;
 
 @RestController
 @RequestMapping("/api/subscriptions")
@@ -37,6 +38,11 @@ public class SubscriptionController {
     public ResponseEntity<?> cancel(@PathVariable String subscriptionId) {
             subscriptionService.cancel(subscriptionId);
             return ResponseEntity.ok(new ApiResponse("Suscripción cancelada correctamente"));
+    }
+    
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getSubscriptionsByUser(@PathVariable String userId) {
+        return ResponseEntity.ok(subscriptionService.getSubscriptionsByUserId(userId));
     }
 }
 

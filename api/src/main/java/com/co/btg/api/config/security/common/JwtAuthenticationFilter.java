@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.co.btg.api.service.JwtService;
+import com.co.btg.api.service.imp.JwtService;
 
 import java.io.IOException;
 import java.util.Collections;

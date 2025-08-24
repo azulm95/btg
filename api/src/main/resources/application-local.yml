@@ -6,10 +6,10 @@ server:
   port: 8080
 
 security:
- jwt:
-  secret: 01234567890123456789012345678901
-  issuer: btg-api-local
-  expiration-minutes: 60
+  jwt:
+    secret: 01234567890123456789012345678901
+    issuer: btg-api-local
+    expiration-minutes: 60
 
 aws:
   dynamodb:
@@ -17,3 +17,16 @@ aws:
     secretKey: test
     endpoint: http://localhost:8000
     region: localhost
+
+email:
+  host: smtp.gmail.com
+  port: 587
+  username: koy27342@gmail.com
+  password: svjv rido vupz ucmb
+  properties:
+    mail.smtp.auth: true
+    mail.smtp.starttls.enable: true
+twilio:
+ account-sid: ACe38cd478d79bb80a0cda3ec6b09f 15b9
+ auth-token: TU_AUTH_TOKEN
+ from-number: +573233425899

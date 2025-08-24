@@ -1,5 +1,6 @@
-package com.co.btg.api.service;
+package com.co.btg.api.service.imp;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -20,8 +21,10 @@ public class UserService {
 	
 	public User saveUser(UserRequest dto) {
 		User user = new User();
-		if(dto.getUserId() == null) {
+		if(dto.getUserId() == null || dto.getUserId().trim().isEmpty()) {
 			user.setUserId(UUID.randomUUID().toString().substring(0, 8));
+		}else {
+			user.setUserId(dto.getUserId());
 		}
 		user.setBalance(dto.getBalance());
 		user.setEmail(dto.getEmail());
@@ -35,6 +38,10 @@ public class UserService {
 	
 	public User findById(String userId) throws UserNotFoundException {
 		return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("Usuario no encontrado con id: " + userId));
+	}
+	
+	public List<User> findAll(){
+		return userRepository.findAll();
 	}
 
 }

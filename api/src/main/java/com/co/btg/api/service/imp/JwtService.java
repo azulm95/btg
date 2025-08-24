@@ -1,4 +1,4 @@
-package com.co.btg.api.service;
+package com.co.btg.api.service.imp;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

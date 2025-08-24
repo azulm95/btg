@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.co.btg.api.service.SubscriptionService;
+import com.co.btg.api.service.imp.SubscriptionService;
+import com.co.btg.api.service.imp.TransactionService;
 
 @RestController
 @RequestMapping("/api/transactions")
 @RequiredArgsConstructor
 public class TransactionController {
 
-    private final SubscriptionService subscriptionService;
+    private final TransactionService transactionService;
 
-    // 3. Historial de transacciones por usuario
     @GetMapping("/{userId}")
     public ResponseEntity<?> getHistory(@PathVariable String userId) {
-        return ResponseEntity.ok(subscriptionService.getHistoryByUser(userId));
+        return ResponseEntity.ok(transactionService.getHistoryByUser(userId));
     }
 }
 
