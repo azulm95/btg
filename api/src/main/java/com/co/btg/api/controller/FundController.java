@@ -6,7 +6,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.co.btg.api.models.Fund;
-import com.co.btg.api.repositories.GenericRepository;
+import com.co.btg.api.repositories.FundRepository;
+
 
 
 @RestController
@@ -14,7 +15,7 @@ import com.co.btg.api.repositories.GenericRepository;
 @RequiredArgsConstructor
 public class FundController {
 
-    private final GenericRepository<Fund> fundRepository;
+    private final FundRepository fundRepository;
 
     
     @PreAuthorize("hasAnyRole('USER','ADMIN')")

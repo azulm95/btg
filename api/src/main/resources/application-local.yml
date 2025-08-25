@@ -15,7 +15,7 @@ aws:
   dynamodb:
     accessKey: test
     secretKey: test
-    endpoint: http://localhost:8000
+    endpoint: http://dynamodb:8000
     region: localhost
 
 email:

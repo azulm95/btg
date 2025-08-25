@@ -15,7 +15,10 @@ import com.co.btg.api.models.Fund;
 import com.co.btg.api.models.Subscription;
 import com.co.btg.api.models.Transaction;
 import com.co.btg.api.models.User;
-import com.co.btg.api.repositories.GenericRepository;
+import com.co.btg.api.repositories.FundRepository;
+import com.co.btg.api.repositories.SubscriptionRepository;
+import com.co.btg.api.repositories.TransactionRepository;
+import com.co.btg.api.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,10 +27,10 @@ import lombok.RequiredArgsConstructor;
 public class SubscriptionService {
 
 
-    private final GenericRepository<User> userRepository;
-    private final GenericRepository<Fund> fundRepository;
-    private final GenericRepository<Subscription> subscriptionRepository;
-    private final GenericRepository<Transaction> transactionRepository;
+    private final UserRepository userRepository;
+    private final FundRepository fundRepository;
+    private final SubscriptionRepository subscriptionRepository;
+    private final TransactionRepository transactionRepository;
     private final NotificationFactory notificationFactory;
 
     // Suscribirse a un fondo
@@ -141,11 +144,11 @@ public class SubscriptionService {
 
     	public List<Subscription> getSubscriptionsByUserId(String userId){
     		List<Subscription> subs=  subscriptionRepository.findByField("userId", userId);
-    		if(subs.size() > 0) {
-    			return subs;
-    		}else {
-    		  throw  new SubscriptionNotFoundException("Suscripción no encontrada para el usuario con id: " + userId);
-    		}
+                if(!subs.isEmpty()) {
+                        return subs;
+                }else {
+                  throw  new SubscriptionNotFoundException("Suscripción no encontrada para el usuario con id: " + userId);
+                }
     	}
 
 }

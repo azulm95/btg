@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.co.btg.api.exceptions.TransactionNotFoundException;
 import com.co.btg.api.models.Transaction;
-import com.co.btg.api.repositories.GenericRepository;
+import com.co.btg.api.repositories.TransactionRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,15 +14,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TransactionService {
 	
-	  private final GenericRepository<Transaction> transactionRepository;
+	  private final TransactionRepository transactionRepository;
     // Ver historial
     public List<Transaction> getHistoryByUser(String userId) {
     	List<Transaction> trans=transactionRepository.findByField("userId", userId);
-    	if(trans.size() > 0) {
-    		return trans;
-    	}else {
-    		throw new TransactionNotFoundException("No se encontraron transacciones para el usuario: "+ userId);
-    	}
+		if(!trans.isEmpty()) {
+			return trans;
+		}else {
+			throw new TransactionNotFoundException("No se encontraron transacciones para el usuario: "+ userId);
+		}
     	
     	
     }

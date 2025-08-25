@@ -10,7 +10,11 @@ import com.co.btg.api.models.Fund;
 import com.co.btg.api.models.Subscription;
 import com.co.btg.api.models.Transaction;
 import com.co.btg.api.models.User;
+import com.co.btg.api.repositories.FundRepository;
 import com.co.btg.api.repositories.GenericRepository;
+import com.co.btg.api.repositories.SubscriptionRepository;
+import com.co.btg.api.repositories.TransactionRepository;
+import com.co.btg.api.repositories.UserRepository;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -58,8 +62,8 @@ public class DynamoDbConfig {
     }
 
     @Bean
-    public GenericRepository<Fund> fundRepository(DynamoDbTable<Fund> fundTable) {
-        return new GenericRepository<>(fundTable);
+    public FundRepository fundRepository(DynamoDbTable<Fund> fundTable) {
+        return new FundRepository(fundTable);
     }
 
     @Bean
@@ -68,8 +72,8 @@ public class DynamoDbConfig {
     }
 
     @Bean
-    public GenericRepository<Subscription> subscriptionRepository(DynamoDbTable<Subscription> subscriptionTable) {
-        return new GenericRepository<>(subscriptionTable);
+    public SubscriptionRepository subscriptionRepository(DynamoDbTable<Subscription> subscriptionTable) {
+        return new SubscriptionRepository(subscriptionTable);
     }
 
     @Bean
@@ -78,8 +82,8 @@ public class DynamoDbConfig {
     }
 
     @Bean
-    public GenericRepository<User> userRepository(DynamoDbTable<User> userTable) {
-        return new GenericRepository<>(userTable);
+    public UserRepository userRepository(DynamoDbTable<User> userTable) {
+        return new UserRepository(userTable);
     }
 
     @Bean
@@ -88,7 +92,7 @@ public class DynamoDbConfig {
     }
 
     @Bean
-    public GenericRepository<Transaction> transactionRepository(DynamoDbTable<Transaction> transactionTable) {
-        return new GenericRepository<>(transactionTable);
+    public TransactionRepository transactionRepository(DynamoDbTable<Transaction> transactionTable) {
+        return new TransactionRepository(transactionTable);
     }
 }
