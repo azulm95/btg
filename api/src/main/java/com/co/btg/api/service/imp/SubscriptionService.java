@@ -1,4 +1,4 @@
-package com.co.btg.api.service;
+package com.co.btg.api.service.imp;
 
 import java.time.Instant;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.co.btg.api.enums.NotificationType;
 import com.co.btg.api.exceptions.FundNotFoundException;
 import com.co.btg.api.exceptions.InsufficientBalanceException;
 import com.co.btg.api.exceptions.SubscriptionNotFoundException;
@@ -15,6 +16,7 @@ import com.co.btg.api.models.Subscription;
 import com.co.btg.api.models.Transaction;
 import com.co.btg.api.models.User;
 import com.co.btg.api.repositories.GenericRepository;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,7 +28,7 @@ public class SubscriptionService {
     private final GenericRepository<Fund> fundRepository;
     private final GenericRepository<Subscription> subscriptionRepository;
     private final GenericRepository<Transaction> transactionRepository;
-    private final NotificationService notificationService;
+    private final NotificationFactory notificationFactory;
 
     // Suscribirse a un fondo
     public Subscription subscribe(String userId, String fundId, Double amount) {
@@ -73,8 +75,19 @@ public class SubscriptionService {
         transactionRepository.save(tx);
 
         // Notificación simulada
-        notificationService.send(user, "Se ha suscrito exitosamente al fondo " + fund.getName());
+        
+       if(user.getPreferredNotification().equalsIgnoreCase("EMAIL")) {
+    	   var notificationService = notificationFactory.getService(NotificationType.EMAIL);
+       		notificationService.notifyUser(user.getEmail(), "Btg Notificacion", "Saludos: "+user.getName() +" Se ha suscrito exitosamente al fondo " + fund.getName());
+       }else {
+    	   var notificationService = notificationFactory.getService(NotificationType.SMS);
+      		notificationService.notifyUser(user.getPhone(), "Btg Notificacion", "Saludos: "+user.getName() +" Se ha suscrito exitosamente al fondo " + fund.getName());
+       }
+    	
+    
+    
 
+        
         return subscription;
     }
 
@@ -115,12 +128,25 @@ public class SubscriptionService {
         transactionRepository.save(tx);
 
         // Notificación simulada
-        notificationService.send(user, "Ha cancelado la suscripción al fondo " + fund.getName());
+        
+        if(user.getPreferredNotification().equalsIgnoreCase("EMAIL")) {
+     	   var notificationService = notificationFactory.getService(NotificationType.EMAIL);
+        		notificationService.notifyUser(user.getEmail(), "Btg Notificacion", "Saludos: "+user.getName() + " Ha cancelado la suscripción al fondo " + fund.getName());
+        }else {
+     	   var notificationService = notificationFactory.getService(NotificationType.SMS);
+       		notificationService.notifyUser(user.getPhone(), "Btg Notificacion", "Saludos: "+user.getName() + " Ha cancelado la suscripción al fondo " + fund.getName());
+        }
+        
     }
 
-    // Ver historial
-    public List<Transaction> getHistoryByUser(String userId) {
-    	return transactionRepository.findByField("userId", userId);
-    }
+    	public List<Subscription> getSubscriptionsByUserId(String userId){
+    		List<Subscription> subs=  subscriptionRepository.findByField("userId", userId);
+    		if(subs.size() > 0) {
+    			return subs;
+    		}else {
+    		  throw  new SubscriptionNotFoundException("Suscripción no encontrada para el usuario con id: " + userId);
+    		}
+    	}
+
 }
 

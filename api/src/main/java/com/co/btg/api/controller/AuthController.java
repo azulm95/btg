@@ -1,6 +1,5 @@
 package com.co.btg.api.controller;
 
-import com.co.btg.api.service.JwtService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -10,8 +9,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
+import com.co.btg.api.service.imp.JwtService;
+
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,8 +36,14 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(request.username(), request.password())
             );
 
-            // Generamos token con nuestro JwtService
-            String token = jwtService.generateToken(request.username());
+            // Obtenemos los roles del usuario autenticado
+            List<String> roles = auth.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .map(r -> r.startsWith("ROLE_") ? r.substring(5) : r) // opcional: quitar prefijo
+                    .toList();
+
+            // Generamos token incluyendo roles
+            String token = jwtService.generateToken(request.username(), roles);
 
             return ResponseEntity.ok(Map.of(
                     "access_token", token,
@@ -48,6 +57,6 @@ public class AuthController {
             ));
         }
     }
-
+    
     public record AuthRequest(String username, String password) {}
 }
