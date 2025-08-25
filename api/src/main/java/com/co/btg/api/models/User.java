@@ -27,6 +27,10 @@ public class User {
 
     private Double balance; // saldo actual
     
+    private String password;
+    
+    private String role;
+    
     @DynamoDbPartitionKey
     public String getUserId(){
     	return this.userId;

@@ -140,7 +140,12 @@ public class SubscriptionService {
     }
 
     	public List<Subscription> getSubscriptionsByUserId(String userId){
-    		return subscriptionRepository.findByField("userId", userId);
+    		List<Subscription> subs=  subscriptionRepository.findByField("userId", userId);
+    		if(subs.size() > 0) {
+    			return subs;
+    		}else {
+    		  throw  new SubscriptionNotFoundException("Suscripción no encontrada para el usuario con id: " + userId);
+    		}
     	}
 
 }
